@@ -41,4 +41,9 @@ export class AuthService {
    )
    return {accessToken}
  }
+
+ async getProfile(name:string){
+  const user = await this.userservice.getUserByName(name);
+  return `Hey welcome ${user.userName}`
+}
 }
