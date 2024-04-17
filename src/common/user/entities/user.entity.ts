@@ -4,9 +4,6 @@ import bcrypt from 'bcrypt';
 export class User extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({type:'varchar', unique:true})
-  userId: string;
   
   @Column({ type: 'varchar', unique:true})
   userName: string;

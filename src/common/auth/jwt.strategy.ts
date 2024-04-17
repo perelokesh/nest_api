@@ -7,12 +7,20 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     private readonly userService: UserService
   ){
     super({
+
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'secret'
+      secretOrKey: 'SECRET'
     })
   }
 
   async validate(payload:any){
+    const {userId} = payload;
+    const user = await this.userService.findOne(userId);
+    if(!user){
+      throw new Error('Invalid token');
+    }
+    console.log(user);
+    return user;
     
   }
 }

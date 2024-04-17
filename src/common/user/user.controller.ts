@@ -43,4 +43,9 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  @Get("viewUser/:id")
+  viewProfile(@Param('id') id: string){
+    return this.userService.getUserById(+id);
+  }
 }

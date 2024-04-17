@@ -13,9 +13,9 @@ export class UserService {
      private readonly userRepository: Repository<User>,
   ){}
   async create(createUserDto: CreateUserDto):Promise<User> {
-    const {userId} = createUserDto;
+    const {userName} = createUserDto;
     const existUser = await this.userRepository.findOne({
-      where:{userId},
+      where:{userName},
     })
     if(existUser){
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
@@ -30,13 +30,15 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return await this.userRepository.findOne({
-     where:{id}
-    });
+    const user =  await this.userRepository.findOneBy({id});
+    if(!user){
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+    }
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.findOne(id);
+    const user = await this.userRepository.findOneBy({id});
     if(!user){
        throw new NotFoundException()
     }
@@ -44,7 +46,7 @@ export class UserService {
     return await this.userRepository.save(user);
   }
   async remove(id: number) {
-    const user = await this.findOne(id);
+    const user = await this.userRepository.findOneBy({id});
     if(!user){
        throw new NotFoundException()
     }

@@ -15,7 +15,7 @@ export class AuthService {
  const {userName,password} = signInDto
  const user = await this.userservice.getUserByName(userName)
  if(!user){
-  throw new NotFoundException(`User: ${userName} not found`)
+  throw new NotFoundException(`User: ${user.userName} not found`)
  }
  const isPasswordValid = await bcrypt.compare(password, user.password)
  if(!isPasswordValid){
@@ -34,7 +34,7 @@ export class AuthService {
     },
     {
      expiresIn:'1h',
-     secret:'secret',
+     secret:'SECRET',
     
     }
   
@@ -42,8 +42,4 @@ export class AuthService {
    return {accessToken}
  }
 
- async getProfile(name:string){
-  const user = await this.userservice.getUserByName(name);
-  return `Hey welcome ${user.userName}`
-}
 }

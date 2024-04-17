@@ -12,8 +12,4 @@ userName:string
 @IsNotEmpty()
 password:string;
 
-@ApiProperty()
-@IsAlphanumeric()
-@Length(6,20)
-userId:string;
 }
